@@ -1,0 +1,4 @@
+interface:
+  display_name: "Short Video Breakdown"
+  short_description: "Analyze short videos into reusable reports"
+  default_prompt: "Use $short-video-breakdown-report to analyze this video into an HTML report with transcript, hooks, highlights, and export-ready assets."
