@@ -29,6 +29,8 @@ Typical outputs include:
 - `transcript.md`
 - `transcript_segments.json`
 - `ocr_*.json`
+- `frame_plan.json`
+- `frame_plan_seconds.txt`
 - timeline and hook diagnosis
 - optimization suggestions for remake/editing
 
@@ -44,6 +46,7 @@ short-video-breakdown-report/
 └── scripts/
     ├── extract_frames.swift
     ├── ocr_subtitles.swift
+    ├── plan_frame_times.py
     ├── render_html_to_png.mjs
     ├── setup_faster_whisper.sh
     └── transcribe_faster_whisper.py
@@ -73,6 +76,7 @@ The core workflow is optimized for macOS:
 - Vision framework for OCR
 - Chrome for HTML-to-PNG rendering
 - Python for Whisper transcription
+- optional `ffmpeg/ffprobe` for highlight-aware frame planning
 - optional `faster-whisper` for local speech transcription
 
 Set up the local Whisper environment:
@@ -84,10 +88,17 @@ cd ~/.codex/skills/short-video-breakdown-report
 
 ## Script Usage
 
+Plan frame timestamps from baseline coverage plus scene cuts, speech turns, keywords, and audio peaks:
+
+```bash
+scripts/plan_frame_times.py input.mp4 output/frame_plan.json \
+  --segments output/transcript/transcript_segments.json
+```
+
 Extract frames:
 
 ```bash
-swift scripts/extract_frames.swift input.mp4 output/frames "0,0.5,1,1.5,2,2.5,3"
+swift scripts/extract_frames.swift input.mp4 output/frames "$(cat output/frame_plan_seconds.txt)"
 ```
 
 OCR subtitles and product text:
@@ -113,19 +124,22 @@ node scripts/render_html_to_png.mjs report.html report.png --width 1080
 
 1. Create a dedicated asset folder for the task.
 2. Inspect video duration, resolution, and codec.
-3. Extract intro frames at 0.5s intervals for the first 3 seconds.
-4. Extract full-video structure frames at 5s, 10s, 15s, or 30s intervals depending on length.
-5. Extract audio and transcribe spoken copy.
-6. Run OCR on sampled frames to correct subtitle/product-name transcription errors.
-7. Identify the actual content hook.
-8. Segment the video into functional stages.
-9. Select high-light screenshots by role, not only by aesthetics.
-10. Generate an HTML report.
-11. Optionally export PNG/PDF and verify dimensions, clipping, broken images, and whitespace.
+3. Extract audio and transcribe spoken copy when possible.
+4. Build an evidence-first frame plan; use even coverage only as the safety net.
+5. Add high-signal candidates from scene cuts, speech segment boundaries, keyword moments, audio peaks, product reveals, reactions, and CTA endings.
+6. Extract planned frames and run OCR to correct subtitle/product-name transcription errors.
+7. Add targeted second-pass frames when OCR/transcript review exposes a missed high-light.
+8. Identify the actual content hook.
+9. Segment the video into functional stages.
+10. Select high-light screenshots by role, not only by aesthetics.
+11. Generate an HTML report.
+12. Optionally export PNG/PDF and verify dimensions, clipping, broken images, and whitespace.
 
 ## Report Principles
 
 - Use the strongest content hook as the title.
+- Do not present evenly-spaced screenshots as high-lights unless they survive the functional selection pass.
+- Every high-light screenshot should prove a specific content function.
 - Include a three-second hook diagnosis.
 - Summarize spoken copy by timestamp range.
 - Use wrapped image grids, not horizontal scrollbars.
