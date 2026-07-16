@@ -48,8 +48,9 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 - **Information density**: How much useful premise is delivered without confusion?
 - **Pacing control**: Are there enough visual/copy changes for the platform and length?
 - **Product seeding**: Are product benefits shown in context rather than pasted in?
+- **Proof and conversion discipline**: Are the strongest claims supported by visible evidence, clear price/value, credible proof, and a concrete CTA?
 
-Use 1-10 scores sparingly. Scores should support the diagnosis, not replace it.
+Use 1-10 scores sparingly. Scores should support the diagnosis, not replace it. Do not give high scores just because a hook idea is strong. Penalize execution gaps such as subjective claims without proof, missing price, weak CTA, unclear product evidence, key proof appearing too late, or visual action that distracts from the promise.
 
 ## Highlight Selection Functions
 
@@ -70,6 +71,7 @@ Prefer one screenshot for each role when present:
 ## Export Rules
 
 - For PNG long images, default width is 1080px unless the user says otherwise.
+- PNG long-image filenames should start with the local date prefix `YYYYMMDD-`, for example `20260716-<strongest-hook>-视频拆解.png`.
 - For PDF, ask whether the user wants paginated or one-page long canvas if not obvious.
 - After export, verify:
   - image references are not broken

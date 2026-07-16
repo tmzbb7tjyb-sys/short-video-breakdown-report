@@ -55,6 +55,7 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - Explain action-impact mechanisms when present. Name the specific movement and why it works, for example "language filters the target user, while entering the dorm bed and pulling the curtain create physical immediacy".
    - Segment the full video into content stages with timestamps.
    - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
+   - Calibrate scores against execution gaps, not just idea quality. A strong hook mechanism should still lose points if the proof chain is weak, the price or CTA is unclear, the claim is only subjective, key evidence appears too late, or the visual action distracts from the product promise. Scores should explain what was penalized.
    - Pick high-light screenshots by function, not just appearance. Use a priority order when applicable: action-impact frames first, hook/persona evidence second, product/proof frames third, conversion/CTA frames last. A clear package frame is not automatically better than a blurry but high-impact action peak.
    - If action impact is central to the video, include it in the timeline as its own row or field, separate from static visual evidence.
    - Use the frame plan reasons and OCR/transcript evidence to justify high-light picks. If a chosen screenshot came from uniform coverage only, verify manually that it is still the best evidence for that moment.
@@ -69,6 +70,7 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 ## Output Conventions
 
 - Save generated reports with descriptive names, for example `<slug>_video_analysis_report.html`.
+- Save exported PNG long images with a date prefix in `YYYYMMDD-` format, for example `20260716-<strongest-hook>-视频拆解.png`. Use the current local date unless the user specifies another date.
 - Save transcript artifacts:
   - `transcript.md`
   - `transcript_segments.json`
