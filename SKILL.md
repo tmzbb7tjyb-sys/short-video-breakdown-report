@@ -27,9 +27,11 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
      - visual scene-change candidates from ffmpeg scene detection
      - speech segment starts, ends, and midpoints from `transcript_segments.json`
      - keyword moments around hooks, reversals, product claims, sensory words, price/benefit proof, relationship conflict, surprises, and CTA language
+     - action-impact moments around kinetic hooks and visual peaks: entering, opening, pulling, tearing, pouring, spraying, mist bursts, flipping, shaking, hitting, close body contact, strong reactions, or any gesture that creates stop-scrolling force
      - optional audio loudness peaks when ffmpeg audio filters are available
    - Save the generated plan as `frame_plan.json` and `frame_plan_seconds.txt`.
-   - If `plan_frame_times.py` is unavailable or ffmpeg is missing, manually make a two-pass list: baseline coverage first, then add targeted timestamps after transcript/OCR review. Never stop at uniform sampling.
+   - If the clip is action-heavy, especially in the first 0-8s, add a dense action pass at 0.25s-0.5s intervals around motion peaks. Generate an action contact sheet when useful so the strongest gestures are not missed.
+   - If `plan_frame_times.py` is unavailable or ffmpeg is missing, manually make a two-pass list: baseline coverage first, then add targeted timestamps after transcript/OCR review and action review. Never stop at uniform sampling.
    - De-duplicate nearby timestamps, but keep the stronger candidate when two moments are close. Prefer a frame that has a clear function in the report over a merely pretty frame.
 
 4. **Extract evidence**
@@ -38,19 +40,23 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - Transcribe audio with `scripts/transcribe_faster_whisper.py` if `faster-whisper` is installed; otherwise install it in a project-local venv if the user allows package installation or network use.
    - OCR planned frames with `scripts/ocr_subtitles.swift` to correct Whisper errors in subtitles, product names, and on-screen hooks.
    - After OCR, add a second-pass mini extraction if the first pass missed important on-screen text, a product reveal, a reaction peak, or a transition/twist mentioned in speech. Second-pass frames should be named and explained as targeted evidence, not mixed silently into the baseline set.
+   - If strong physical actions are present, extract and name `action_frames/` or `action_highlights/` separately. Do not let clean static product frames replace stronger action-impact frames when the action is what creates the hook.
 
 5. **Read the video before designing**
    - Build a working transcript from Whisper plus OCR.
    - Correct obvious mishears using on-screen subtitles and visual context. Examples: dialect, brand names, food names, relationship hooks.
    - Identify the actual core promise. It may be in speech rather than the image.
    - Mine the key hook before writing the report. Look beyond literal words: inspect speaker identity, role framing, voice/timbre changes, interview or dialogue posture, visual setting, subtitle labels, information gaps, reversals, and why the viewer should believe the claim. Do not flatten a distinctive hook into a generic category such as "discount", "product reveal", or "food close-up" if the execution has a sharper mechanism.
+   - Mine action hooks as carefully as language hooks. Ask what motion makes the viewer stop: a person entering the scene, a hand opening/pulling/tearing, food being poured or mixed, liquid or mist bursting out, a body-contact moment, a sharp camera move, or a reaction that changes emotional temperature.
 
 6. **Analyze**
    - Produce a 3-second hook diagnosis.
    - Explain the hook mechanism, not just the hook text. If a hook works because of a role cue, different voice, mock interview, internal-source framing, contrast between speakers, or "said by someone unexpected" device, call that out explicitly.
+   - Explain action-impact mechanisms when present. Name the specific movement and why it works, for example "language filters the target user, while entering the dorm bed and pulling the curtain create physical immediacy".
    - Segment the full video into content stages with timestamps.
    - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
-   - Pick high-light screenshots by function, not just appearance.
+   - Pick high-light screenshots by function, not just appearance. Use a priority order when applicable: action-impact frames first, hook/persona evidence second, product/proof frames third, conversion/CTA frames last. A clear package frame is not automatically better than a blurry but high-impact action peak.
+   - If action impact is central to the video, include it in the timeline as its own row or field, separate from static visual evidence.
    - Use the frame plan reasons and OCR/transcript evidence to justify high-light picks. If a chosen screenshot came from uniform coverage only, verify manually that it is still the best evidence for that moment.
    - Write optimization advice for editing, opening hook, picture, subtitles, BGM/sound, and remake structure.
    - See `references/report-structure.md` for the recommended report anatomy and scoring dimensions.

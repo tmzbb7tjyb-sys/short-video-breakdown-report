@@ -13,6 +13,7 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 2. **3-Second Hook Diagnosis**
    - State the strongest hook.
    - Explain whether the hook appears in speech, subtitles, picture, or title.
+   - If the hook depends on motion, describe the action mechanism, not only the frame content.
    - Include 3 scores: strongest hook dimension, emotion/interest, overall first-3-second score.
    - Include P0/P1 actions.
 
@@ -25,11 +26,13 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 4. **Highlight Screenshots**
    - Use a wrapped grid, never a horizontal scrollbar for PNG/PDF export.
    - Each caption should state the screenshot's function.
+   - Prioritize action-impact frames when they create stop-scrolling force. Do not over-select static product/proof frames at the expense of entering, pulling, tearing, pouring, spraying, mist bursts, close body contact, or reaction peaks.
 
 5. **Timeline Breakdown**
    - Columns are stages, not necessarily equal-length shots.
    - The number of columns should follow the video's actual content beats. Six columns is not a template requirement; short videos may need fewer, dense e-commerce clips may need 8-12.
    - Rows should include content function, spoken point, visual action, strengths, risks, and optimization.
+   - If movement is a major driver of retention, include a dedicated "action impact" row that names the specific gesture or kinetic event.
 
 6. **Optimization**
    - Separate opening hook, pacing, picture, copy/subtitles, sound/BGM, and remake version.
@@ -39,6 +42,7 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 - **Language hook**: Does the opening phrase create curiosity, relationship, conflict, promise, or value?
 - **Persona hook**: Is the speaker's role or emotional setup clear?
 - **Role/voice hook**: Does the video use identity labels, interview framing, dialogue, voice/timbre changes, or an unexpected speaker to make the claim feel more credible or interesting?
+- **Action-impact hook**: Does a physical movement, gesture, burst, reveal, or reaction create immediate stop-scrolling force?
 - **Visual impact**: Is there immediate, inspectable visual information?
 - **Emotion activation**: Does the viewer feel amusement, intimacy, appetite, relief, aspiration, or suspense?
 - **Information density**: How much useful premise is delivered without confusion?
@@ -53,6 +57,8 @@ Prefer one screenshot for each role when present:
 
 - Hook/persona frame
 - Role, interview, or voice-framing evidence
+- Action-entry or gesture peak
+- Pouring, spraying, tearing, pulling, flipping, or burst moment
 - Product or scene reveal
 - First action/first bite
 - Texture/detail close-up
