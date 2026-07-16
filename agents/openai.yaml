@@ -1,4 +1,4 @@
 interface:
-  display_name: "Short Video Breakdown"
+  display_name: "短视频框架拆解1.0"
   short_description: "Analyze short videos into reusable reports"
-  default_prompt: "Use $short-video-breakdown-report to analyze this video into an HTML report with transcript, hooks, highlights, and export-ready assets."
+  default_prompt: "Use $短视频框架拆解1.0 to analyze this video into an HTML report with transcript, hooks, highlights, and export-ready assets."

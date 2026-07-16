@@ -1,9 +1,9 @@
 ---
-name: short-video-breakdown-report
+name: 短视频框架拆解1.0
 description: Analyze short-form or vertical videos into reusable content breakdown reports. Use when the user asks to dissect,拆解,复盘, analyze, summarize, score, or export a short video/Vlog/e-commerce/food/lifestyle clip, especially when they need hooks, spoken copy, subtitles, high-light screenshots, timeline structure, optimization advice, HTML reports, PNG long images, or PDF-ready assets from .mp4/.mov videos.
 ---
 
-# Short Video Breakdown Report
+# 短视频框架拆解1.0
 
 Turn a video into an evidence-backed report that a creator, operator, or client can use to understand what works and how to remake it.
 
@@ -43,10 +43,13 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - Build a working transcript from Whisper plus OCR.
    - Correct obvious mishears using on-screen subtitles and visual context. Examples: dialect, brand names, food names, relationship hooks.
    - Identify the actual core promise. It may be in speech rather than the image.
+   - Mine the key hook before writing the report. Look beyond literal words: inspect speaker identity, role framing, voice/timbre changes, interview or dialogue posture, visual setting, subtitle labels, information gaps, reversals, and why the viewer should believe the claim. Do not flatten a distinctive hook into a generic category such as "discount", "product reveal", or "food close-up" if the execution has a sharper mechanism.
 
 6. **Analyze**
    - Produce a 3-second hook diagnosis.
+   - Explain the hook mechanism, not just the hook text. If a hook works because of a role cue, different voice, mock interview, internal-source framing, contrast between speakers, or "said by someone unexpected" device, call that out explicitly.
    - Segment the full video into content stages with timestamps.
+   - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
    - Pick high-light screenshots by function, not just appearance.
    - Use the frame plan reasons and OCR/transcript evidence to justify high-light picks. If a chosen screenshot came from uniform coverage only, verify manually that it is still the best evidence for that moment.
    - Write optimization advice for editing, opening hook, picture, subtitles, BGM/sound, and remake structure.

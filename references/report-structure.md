@@ -18,6 +18,7 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 
 3. **Transcript Calibration**
    - Summarize key spoken copy by time range.
+   - Use as many calibration cards as the content needs. Do not compress distinct hooks, claims, proof points, sensory descriptions, price/value claims, scenarios, or CTAs into a fixed 6-card grid.
    - Note Whisper/OCR corrections when they materially change meaning.
    - Do not present uncertain machine transcription as exact if dialect is unclear.
 
@@ -27,6 +28,7 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 
 5. **Timeline Breakdown**
    - Columns are stages, not necessarily equal-length shots.
+   - The number of columns should follow the video's actual content beats. Six columns is not a template requirement; short videos may need fewer, dense e-commerce clips may need 8-12.
    - Rows should include content function, spoken point, visual action, strengths, risks, and optimization.
 
 6. **Optimization**
@@ -36,6 +38,7 @@ Use this reference when writing the analysis narrative or designing the HTML rep
 
 - **Language hook**: Does the opening phrase create curiosity, relationship, conflict, promise, or value?
 - **Persona hook**: Is the speaker's role or emotional setup clear?
+- **Role/voice hook**: Does the video use identity labels, interview framing, dialogue, voice/timbre changes, or an unexpected speaker to make the claim feel more credible or interesting?
 - **Visual impact**: Is there immediate, inspectable visual information?
 - **Emotion activation**: Does the viewer feel amusement, intimacy, appetite, relief, aspiration, or suspense?
 - **Information density**: How much useful premise is delivered without confusion?
@@ -49,6 +52,7 @@ Use 1-10 scores sparingly. Scores should support the diagnosis, not replace it.
 Prefer one screenshot for each role when present:
 
 - Hook/persona frame
+- Role, interview, or voice-framing evidence
 - Product or scene reveal
 - First action/first bite
 - Texture/detail close-up
