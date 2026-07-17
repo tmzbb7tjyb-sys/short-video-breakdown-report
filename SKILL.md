@@ -23,8 +23,9 @@ When the input is a selling-point formula or performance table, treat it as **fo
   - `字幕、音频与画面校准`
   - `高光截图`
   - `时间轴拆解`
-- Keep the template's dense, table-based export style. The number of calibration cards, highlight figures, and timeline columns may change to match the video, but the section order and overall layout must stay fixed.
-- Fixed layout does **not** mean fixed 6-part analysis. Do not force the timeline into 6 columns. Use the video's actual beats: very short clips may need 3-5 beats; longer剧情/带货 clips may need 7-10 beats; dense product proof videos may need more. If a template example shows 6 columns, treat it as placeholder only.
+- Keep the template's dense, table-based export style. The number of calibration cards, highlight figures, and timeline columns must change to match the video; the section order and overall layout stay fixed, not the item count.
+- Fixed layout does **not** mean fixed 6-part analysis. Do not force the timeline into 6 columns, do not pad weak beats to reach 6, and do not merge real beats just to fit 6. Use the video's actual beats: very short clips may need 3-5 beats; longer剧情/带货 clips may need 7-10 beats; dense product proof videos may need more. If a template example shows 6 columns or 6 visual slots, treat it as placeholder only.
+- When filling `[[TIMELINE_HEAD]]` and `[[TIMELINE_BODY]]`, rebuild the table from the real beat list every time. Add or remove `<th>`/`<td>` cells as needed instead of reusing a six-slot skeleton.
 - Top metric cards should describe the actual structure, for example `7拍`, `8个内容拍点`, or `5个转化节点`; do not default to `6段` unless the video genuinely has six distinct beats.
 - Save the HTML with a suffix such as `<slug>_video_analysis_report_fixed.html` or `<slug>_video_analysis_report_yesterday_style.html`.
 - Render the PNG with `scripts/render_html_to_png.mjs` at 1080px wide. If the user asks for another width, use that width but keep the same template.
@@ -157,7 +158,7 @@ Use this domain lens for food/drink/snack/nutrition/health-food tables or videos
    - Explain BGM/cut-point mechanisms when present. Include the strongest beat-aligned moments in the diagnosis, calibration cards, highlight captions, or timeline. If the clip is cut to music, do not reduce the mechanism to "fast pacing"; call it "BGM卡点", "重拍切换", "节拍推进", or equivalent.
    - Segment the full video into content stages with timestamps.
    - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
-   - Before writing the final timeline, name the real beat count in plain language and sanity-check it against the evidence. If the answer is "six" only because the template has six visual slots, revise it.
+   - Before writing the final timeline, name the real beat count in plain language and sanity-check it against the evidence. If the answer is "six" only because the template, a previous report, or the screenshot grid has six visual slots, revise it. Split only when the content function changes; merge only when adjacent moments perform the same function.
    - Calibrate scores against execution gaps, not just idea quality. A strong hook mechanism should still lose points if the proof chain is weak, the price or CTA is unclear, the claim is only subjective, key evidence appears too late, or the visual action distracts from the product promise. Scores should explain what was penalized.
    - Pick high-light screenshots by function, not just appearance. Use a priority order when applicable: action-impact frames first, hook/persona evidence second, product/proof frames third, conversion/CTA frames last. A clear package frame is not automatically better than a blurry but high-impact action peak.
    - If action impact is central to the video, include it in the timeline as its own row or field, separate from static visual evidence.
@@ -195,7 +196,7 @@ Use this domain lens for food/drink/snack/nutrition/health-food tables or videos
 - Every highlighted screenshot should answer: what content function does this frame prove?
 - Do not include horizontal scroll containers in output intended for PNG/PDF export.
 - Do not change the fixed report layout unless the user explicitly asks for a different layout. Content may vary; the section order and export style should not.
-- Do not treat fixed report layout as a fixed six-step framework. The timeline column count and metric labels must reflect the actual video structure.
+- Do not treat fixed report layout as a fixed six-step framework. The timeline column count and metric labels must reflect the actual video structure; the report should never be padded, truncated, or renamed to match six template slots.
 - Keep color systems simple and consistent: two or three tones are usually enough.
 - Verify local image references before presenting HTML.
 - Verify exported PNG dimensions with `sips` or PIL.
