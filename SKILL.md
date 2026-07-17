@@ -1,6 +1,6 @@
 ---
 name: 短视频框架拆解1.0
-description: Analyze short-form or vertical videos into reusable content breakdown reports with fixed PNG report layout, BGM beat/cut-point analysis, hooks, spoken copy, subtitles, high-light screenshots, timeline structure, optimization advice, HTML reports, and PDF-ready assets from .mp4/.mov videos. Use when the user asks to dissect,拆解,复盘, analyze, summarize, score, export, or generate a report for short videos/Vlogs/e-commerce/food/lifestyle clips.
+description: Analyze short-form or vertical videos and short-video performance/formula tables into reusable content breakdown reports with fixed PNG report layout, BGM beat/cut-point analysis, hooks, spoken copy, subtitles, high-light screenshots, timeline structure, optimization advice, HTML reports, PDF-ready assets, and cross-video selling-point grammar from .mp4/.mov videos or CSV/XLSX reference-video links. Use when the user asks to dissect,拆解,复盘, analyze, summarize, score, export, or generate a report for short videos/Vlogs/e-commerce/food/lifestyle clips or asks to study卖点公式/黄金公式/参考视频 tables.
 ---
 
 # 短视频框架拆解1.0
@@ -9,9 +9,12 @@ Turn a video into an evidence-backed report that a creator, operator, or client 
 
 Do not rely on frames alone. Treat the video as combined **picture + speech + subtitles + timing + deliverable layout**.
 
+When the input is a selling-point formula or performance table, treat it as **formula + keyword taxonomy + metrics + audience + reference links + accessible video evidence**. Do not flatten it into a generic keyword summary.
+
 ## Mandatory Layout Contract
 
 - Default deliverable is a **1080px-wide PNG long image plus its source HTML**, not only an HTML report.
+- If the user only asks to read a formula table, compare rows, or improve this skill, a structured Markdown/table summary is acceptable. Use the fixed PNG layout when the task includes analyzing one or more actual videos into a client-ready visual report.
 - Always use `assets/fixed-report-template.html` as the base layout unless the user explicitly asks for a different layout. Do not invent a new visual structure by default.
 - Preserve the fixed report anatomy:
   - newspaper-style 1240px `.page`
@@ -21,8 +24,85 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
   - `高光截图`
   - `时间轴拆解`
 - Keep the template's dense, table-based export style. The number of calibration cards, highlight figures, and timeline columns may change to match the video, but the section order and overall layout must stay fixed.
+- Fixed layout does **not** mean fixed 6-part analysis. Do not force the timeline into 6 columns. Use the video's actual beats: very short clips may need 3-5 beats; longer剧情/带货 clips may need 7-10 beats; dense product proof videos may need more. If a template example shows 6 columns, treat it as placeholder only.
+- Top metric cards should describe the actual structure, for example `7拍`, `8个内容拍点`, or `5个转化节点`; do not default to `6段` unless the video genuinely has six distinct beats.
 - Save the HTML with a suffix such as `<slug>_video_analysis_report_fixed.html` or `<slug>_video_analysis_report_yesterday_style.html`.
 - Render the PNG with `scripts/render_html_to_png.mjs` at 1080px wide. If the user asks for another width, use that width but keep the same template.
+
+## Formula Table And Batch Learning Workflow
+
+Use this workflow when the user provides a CSV/XLSX/Feishu export such as `卖点黄金公式`, `黄金公式`, `卖点公式`, `参考视频`, `CTR`, or `单素材平均消耗`.
+
+1. **Read the table as structured data**
+   - Detect the key columns: formula string, selling-point category keyword columns, spend/consumption, CTR/CVR when present, audience/persona, industry/category, and reference-video URLs.
+   - Preserve row-level context. A formula row is not only a list of tags; it is a tested bundle of audience, claim modules, proof modules, and example materials.
+   - Normalize numbers before comparing: strip commas from spend, strip `%` from rates, and keep the original displayed values in the summary.
+   - Separate signal types:
+     - high spend or high consumption means the material could scale or pass delivery filters, but it is not proof of creative quality by itself.
+     - high CTR means the opening promise or curiosity trigger may be strong, but it is not proof of conversion quality.
+     - formulas with high CTR but lower spend are useful for hook mining; formulas with high spend but moderate CTR are useful for scalable claim/proof patterns.
+   - Do not claim causality from table metrics alone. Phrase findings as hypotheses unless video evidence or experiment metadata supports causality.
+
+2. **Map formulas into content functions**
+   - Translate each formula component into the job it plays in the video:
+     - `痛点`: viewer problem, risk, embarrassment, unmet need, or friction.
+     - `身份认同` / `人群`: who should self-identify and why the claim is meant for them.
+     - `成分配方原料`: what makes the product technically believable.
+     - `功效功能`: the promised outcome or relief.
+     - `市场地位和权威背书`: trust shortcut, certification, ranking, expert, test, or institutional proof.
+     - `品牌调性和故事`: history, origin story, national brand, old brand, founder, or emotional legitimacy.
+     - `风味口味`: taste promise and appetite trigger.
+     - `使用感受和服务体验`: texture, mouthfeel, convenience, aftertaste, service, or sensory proof.
+     - `使用场景`: when/where the product enters life.
+     - `原产地`: place-based trust, freshness, specialty, or scarcity.
+     - `包装`: portability, freshness lock, gifting, single-serve, family pack, or visual recognizability.
+     - `运输`: delivery speed, freshness guarantee, cold chain, free shipping, or service reassurance.
+     - `工艺科技`: process, patent, extraction, fermentation, preservation, or production craft.
+     - `产品代名词`: nickname, color name, category shorthand, iconic package, or memory anchor.
+   - Identify the likely lead module for each row. The first formula component is often the opening hook, but verify against video evidence when available.
+   - Identify the proof chain: hook -> product/ingredient -> proof/backing -> sensory or scene evidence -> conversion cue.
+   - Look for missing links: a strong ingredient without a felt benefit, a strong pain point without proof, a strong taste promise without visible sensory evidence, or a strong authority claim without viewer relevance.
+
+3. **Prioritize reference videos for learning**
+   - Do not try to open every link first. Sample deliberately:
+     - top spend rows for scalable delivery patterns.
+     - top CTR rows for opening hooks and curiosity mechanisms.
+     - rows that combine high spend and high CTR for best-practice candidates.
+     - one or two low-CTR or low-spend contrast rows when useful.
+     - at least one sample per major audience cluster if the table has audience fields.
+   - For each sampled row, keep a small trace: row number, formula, spend, CTR, audience, chosen URL, access result, and what evidence was actually visible.
+
+4. **Access reference links with evidence boundaries**
+   - If a reference URL can be opened, analyze it like any other short video: transcript, OCR, frames, beat/cut points, hook, timeline, proof chain, and CTA.
+   - If a platform returns a login wall, empty player, redirect, expired link, 403, or no `video`/media source, say so explicitly. Do not invent scenes, spoken copy, frames, brands, or claims from the link.
+   - If only table keywords are accessible, limit the analysis to formula-level and keyword-level hypotheses.
+   - When using browser automation for reference pages, prefer an isolated browser context/session for the task and avoid using or disturbing the user's active tabs.
+
+5. **Synthesize cross-video selling-point grammar**
+   - Produce a compact table or notes with:
+     - formula archetype
+     - audience
+     - metric signal
+     - likely hook type
+     - proof mechanism
+     - visual/sensory mechanism to look for
+     - conversion risk or compliance risk
+     - remake prompt/template
+   - Compare component co-occurrence rather than only raw frequency. For example, `成分配方原料 + 痛点`, `成分配方原料 + 市场地位和权威背书`, or `功效功能 + 使用场景` mean different creative jobs.
+   - Keep table-derived learnings separate from video-verified learnings. Mark them as `表格信号`, `视频已验证`, or `待视频验证`.
+
+## Food, Beverage, And Health-Food Content Lens
+
+Use this domain lens for food/drink/snack/nutrition/health-food tables or videos.
+
+- **Taste and appetite**: identify flavor words, first-bite moments, chewing/pouring/cracking/sizzling sounds, texture close-ups, and whether the video makes the viewer feel taste rather than only read taste.
+- **Ingredient and formula trust**: connect ingredient names to a viewer-understandable benefit. Avoid leaving the analysis at "has VC/Omega-3/GABA/probiotics"; ask what problem the ingredient resolves in the video.
+- **Pain point and audience fit**: distinguish children, moms, office workers, older adults, small-town middle-aged users, silver-haired users, Gen Z, and new white-collar users. The same ingredient should be framed differently for different groups.
+- **Authority and compliance**: treat certifications, rankings, expert names, blue-hat marks, tests, old-brand history, and institutions as proof cues. Do not upgrade them into medical certainty. Flag unsupported or risky medical-style claims.
+- **Scenario entry**: name the life scene that makes the product necessary now: breakfast, after meal, overtime, late night, hot pot, travel, gifting, fitness, sleep, family care, children's nutrition, or elder care.
+- **Origin, packaging, and delivery**: for fresh food, snacks, and local specialties, analyze origin and shipping as part of the promise. `顺丰`, `包邮`, cold-chain, independent packs, sealing, and small packs often reduce purchase anxiety rather than merely describe logistics.
+- **Nickname and memory hook**: product代名词 such as color bottles, "小粉", "小绿瓶", "液体黄金", or package nicknames should be analyzed as memory anchors and CTA shorthand.
+- **Sensory proof gap**: if a formula contains `风味口味` or `使用感受和服务体验`, the video should ideally show/produce sensory evidence. Penalize reports where taste, texture, or convenience is only asserted in subtitles.
 
 ## Default Workflow
 
@@ -77,6 +157,7 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - Explain BGM/cut-point mechanisms when present. Include the strongest beat-aligned moments in the diagnosis, calibration cards, highlight captions, or timeline. If the clip is cut to music, do not reduce the mechanism to "fast pacing"; call it "BGM卡点", "重拍切换", "节拍推进", or equivalent.
    - Segment the full video into content stages with timestamps.
    - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
+   - Before writing the final timeline, name the real beat count in plain language and sanity-check it against the evidence. If the answer is "six" only because the template has six visual slots, revise it.
    - Calibrate scores against execution gaps, not just idea quality. A strong hook mechanism should still lose points if the proof chain is weak, the price or CTA is unclear, the claim is only subjective, key evidence appears too late, or the visual action distracts from the product promise. Scores should explain what was penalized.
    - Pick high-light screenshots by function, not just appearance. Use a priority order when applicable: action-impact frames first, hook/persona evidence second, product/proof frames third, conversion/CTA frames last. A clear package frame is not automatically better than a blurry but high-impact action peak.
    - If action impact is central to the video, include it in the timeline as its own row or field, separate from static visual evidence.
@@ -114,6 +195,7 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 - Every highlighted screenshot should answer: what content function does this frame prove?
 - Do not include horizontal scroll containers in output intended for PNG/PDF export.
 - Do not change the fixed report layout unless the user explicitly asks for a different layout. Content may vary; the section order and export style should not.
+- Do not treat fixed report layout as a fixed six-step framework. The timeline column count and metric labels must reflect the actual video structure.
 - Keep color systems simple and consistent: two or three tones are usually enough.
 - Verify local image references before presenting HTML.
 - Verify exported PNG dimensions with `sips` or PIL.
