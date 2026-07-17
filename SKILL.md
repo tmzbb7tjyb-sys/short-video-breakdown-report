@@ -1,6 +1,6 @@
 ---
 name: 短视频框架拆解1.0
-description: Analyze short-form or vertical videos into reusable content breakdown reports. Use when the user asks to dissect,拆解,复盘, analyze, summarize, score, or export a short video/Vlog/e-commerce/food/lifestyle clip, especially when they need hooks, spoken copy, subtitles, high-light screenshots, timeline structure, optimization advice, HTML reports, PNG long images, or PDF-ready assets from .mp4/.mov videos.
+description: Analyze short-form or vertical videos into reusable content breakdown reports with fixed PNG report layout, BGM beat/cut-point analysis, hooks, spoken copy, subtitles, high-light screenshots, timeline structure, optimization advice, HTML reports, and PDF-ready assets from .mp4/.mov videos. Use when the user asks to dissect,拆解,复盘, analyze, summarize, score, export, or generate a report for short videos/Vlogs/e-commerce/food/lifestyle clips.
 ---
 
 # 短视频框架拆解1.0
@@ -8,6 +8,21 @@ description: Analyze short-form or vertical videos into reusable content breakdo
 Turn a video into an evidence-backed report that a creator, operator, or client can use to understand what works and how to remake it.
 
 Do not rely on frames alone. Treat the video as combined **picture + speech + subtitles + timing + deliverable layout**.
+
+## Mandatory Layout Contract
+
+- Default deliverable is a **1080px-wide PNG long image plus its source HTML**, not only an HTML report.
+- Always use `assets/fixed-report-template.html` as the base layout unless the user explicitly asks for a different layout. Do not invent a new visual structure by default.
+- Preserve the fixed report anatomy:
+  - newspaper-style 1240px `.page`
+  - header with large H1, subtitle, meta tags, summary, and three right-side metric cards
+  - `前三秒钩子诊断`
+  - `字幕、音频与画面校准`
+  - `高光截图`
+  - `时间轴拆解`
+- Keep the template's dense, table-based export style. The number of calibration cards, highlight figures, and timeline columns may change to match the video, but the section order and overall layout must stay fixed.
+- Save the HTML with a suffix such as `<slug>_video_analysis_report_fixed.html` or `<slug>_video_analysis_report_yesterday_style.html`.
+- Render the PNG with `scripts/render_html_to_png.mjs` at 1080px wide. If the user asks for another width, use that width but keep the same template.
 
 ## Default Workflow
 
@@ -37,6 +52,11 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 4. **Extract evidence**
    - Use `scripts/extract_frames.swift` for screenshots when AVFoundation is available, passing the timestamp CSV from the frame plan.
    - Extract audio with `avconvert` or any available ffmpeg/AV tool.
+   - For any video with an audio track, extract or convert audio to PCM WAV and run BGM beat/cut-point analysis:
+     - Example: `avconvert --source input.mp4 --preset PresetAppleM4A --output audio.m4a --replace --disableMetadataFilter`
+     - Example: `afconvert -f WAVE -d LEI16 audio.m4a audio.wav`
+     - Run `scripts/analyze_audio_beats.py audio.wav audio_beat_candidates.json`.
+     - Compare beat candidates against visual cut points, object changes, action peaks, subtitle changes, product reveals, and reaction frames. Treat the result as rhythm evidence, not perfect music transcription.
    - Transcribe audio with `scripts/transcribe_faster_whisper.py` if `faster-whisper` is installed; otherwise install it in a project-local venv if the user allows package installation or network use.
    - OCR planned frames with `scripts/ocr_subtitles.swift` to correct Whisper errors in subtitles, product names, and on-screen hooks.
    - After OCR, add a second-pass mini extraction if the first pass missed important on-screen text, a product reveal, a reaction peak, or a transition/twist mentioned in speech. Second-pass frames should be named and explained as targeted evidence, not mixed silently into the baseline set.
@@ -48,11 +68,13 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - Identify the actual core promise. It may be in speech rather than the image.
    - Mine the key hook before writing the report. Look beyond literal words: inspect speaker identity, role framing, voice/timbre changes, interview or dialogue posture, visual setting, subtitle labels, information gaps, reversals, and why the viewer should believe the claim. Do not flatten a distinctive hook into a generic category such as "discount", "product reveal", or "food close-up" if the execution has a sharper mechanism.
    - Mine action hooks as carefully as language hooks. Ask what motion makes the viewer stop: a person entering the scene, a hand opening/pulling/tearing, food being poured or mixed, liquid or mist bursting out, a body-contact moment, a sharp camera move, or a reaction that changes emotional temperature.
+   - Mine BGM rhythm hooks as carefully as language and action hooks. Ask whether cuts, object swaps, subtitle pops, zooms, gestures, reveals, or reactions land on BGM accents. If the video is visibly edited to music, name the mechanism explicitly, for example "BGM重拍像切换按钮，每一拍换一只盘子".
 
 6. **Analyze**
    - Produce a 3-second hook diagnosis.
    - Explain the hook mechanism, not just the hook text. If a hook works because of a role cue, different voice, mock interview, internal-source framing, contrast between speakers, or "said by someone unexpected" device, call that out explicitly.
    - Explain action-impact mechanisms when present. Name the specific movement and why it works, for example "language filters the target user, while entering the dorm bed and pulling the curtain create physical immediacy".
+   - Explain BGM/cut-point mechanisms when present. Include the strongest beat-aligned moments in the diagnosis, calibration cards, highlight captions, or timeline. If the clip is cut to music, do not reduce the mechanism to "fast pacing"; call it "BGM卡点", "重拍切换", "节拍推进", or equivalent.
    - Segment the full video into content stages with timestamps.
    - Do not force Transcript Calibration or Timeline Breakdown into a fixed number of blocks. Let the number of cards/columns follow the video's actual content beats, spoken turns, product claims, proof points, sensory moments, scene changes, and CTA structure.
    - Calibrate scores against execution gaps, not just idea quality. A strong hook mechanism should still lose points if the proof chain is weak, the price or CTA is unclear, the claim is only subjective, key evidence appears too late, or the visual action distracts from the product promise. Scores should explain what was penalized.
@@ -63,8 +85,8 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
    - See `references/report-structure.md` for the recommended report anatomy and scoring dimensions.
 
 7. **Generate deliverables**
-   - Default: HTML report with local image references.
-   - Optional: PNG long image at requested width, using `scripts/render_html_to_png.mjs`.
+   - Default: fixed-layout HTML report using `assets/fixed-report-template.html` with local image references.
+   - Default: PNG long image at 1080px wide, using `scripts/render_html_to_png.mjs`.
    - Optional: single-page or paginated PDF. If exporting PDF, render it back to PNG and check for clipping, blank right/bottom space, broken images, and unreadable text.
 
 ## Output Conventions
@@ -78,6 +100,10 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 - Save frame planning artifacts:
   - `frame_plan.json`
   - `frame_plan_seconds.txt`
+- Save audio rhythm artifacts when audio exists:
+  - `audio.m4a` or equivalent extracted audio
+  - `audio.wav` when used for beat analysis
+  - `audio_beat_candidates.json`
 - Save screenshots under `highlights/` and name them with index, function, and time, for example `03_first_bite_16s.png`.
 - For export images, use the user's requested width. If unspecified, use 1080px wide long PNG.
 
@@ -87,9 +113,11 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 - Do not present evenly-spaced screenshots as "highlights" unless they survive the functional high-light selection pass.
 - Every highlighted screenshot should answer: what content function does this frame prove?
 - Do not include horizontal scroll containers in output intended for PNG/PDF export.
+- Do not change the fixed report layout unless the user explicitly asks for a different layout. Content may vary; the section order and export style should not.
 - Keep color systems simple and consistent: two or three tones are usually enough.
 - Verify local image references before presenting HTML.
 - Verify exported PNG dimensions with `sips` or PIL.
+- Visually inspect or screenshot-check the exported PNG before final delivery. Reject outputs with broken images, obvious blank space, clipped text, hidden horizontal overflow, or a layout that does not match the fixed template.
 - For PDF, verify page count and page size with `pdfinfo`; render a preview with `pdftoppm` before final delivery.
 
 ## Bundled Scripts
@@ -97,6 +125,7 @@ Do not rely on frames alone. Treat the video as combined **picture + speech + su
 - `scripts/plan_frame_times.py <video> <out_json> [--segments transcript_segments.json] [--max-frames 80]`: create a timestamp plan from baseline coverage plus scene cuts, speech segments, keywords, and audio peaks. Prints a seconds CSV for `extract_frames.swift`.
 - `scripts/extract_frames.swift <video> <out_dir> <seconds_csv>`: export PNG frames at exact timestamps.
 - `scripts/ocr_subtitles.swift <frames_dir> <out_json>`: run Vision OCR on frame subtitles/product text.
+- `scripts/analyze_audio_beats.py <audio.wav> <out_json> [--window-ms 50]`: detect lightweight RMS energy accents for BGM/cut-point analysis. Use after converting extracted audio to 16-bit PCM WAV.
 - `scripts/transcribe_faster_whisper.py <audio> <out_dir> [--model small] [--prompt "..."]`: transcribe audio and write Markdown/JSON.
 - `scripts/render_html_to_png.mjs <input.html> <output.png> [--width 1080]`: render a full-page HTML report to a long PNG.
 - `scripts/setup_faster_whisper.sh [venv_dir]`: optional helper to create a local `faster-whisper` environment.
