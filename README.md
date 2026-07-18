@@ -1,82 +1,69 @@
 # Short Video Breakdown Report
 
-A Codex skill for turning short-form or vertical videos into reusable content breakdown reports.
+Codex skills for turning short-form or vertical videos into reusable content analysis reports.
 
-It combines frame extraction, audio/BGM rhythm analysis, speech transcription, subtitle OCR, hook diagnosis, highlight screenshots, timeline structure, optimization advice, and a fixed export-ready HTML/PNG report layout.
+This repository now contains two versions:
 
-## What It Does
+| Version | Path | Best For | Default Deliverable |
+|---|---|---|---|
+| 1.0 | repository root | Evidence-first video structure breakdown: hook, rhythm, transcript, OCR, screenshots, timeline, and remake advice | Fixed-layout HTML source plus 1080px PNG long image |
+| 2.0 | `short-video-breakdown-report-2-0/` | Douyin/Juliang Yuntu-style single-video marketing content asset diagnosis | Single-page long-canvas PDF |
 
-This skill helps analyze videos such as:
+## 2.0 New Capabilities
 
-- food review and food-making clips
-- lifestyle Vlogs
-- e-commerce product seeding videos
-- creator reference videos
-- vertical social videos that need hook, rhythm, and structure analysis
+`short-video-breakdown-report-2-0` keeps the 1.0 video evidence workflow and adds a marketing content asset layer:
 
-The workflow is designed around one principle:
+- **巨量云图式链路诊断**: `选人 -> 做内容 -> 爆文识别 -> 加热放大 -> 搜索承接 -> 转化承接 -> 复盘沉淀`.
+- **内容资产定位**: judge what audience the video influences, what seeding mechanism it uses, whether it is worth amplification, and what downstream path it should hand off to.
+- **达人与TA匹配**: evaluate persona credibility, target-user overlap, content label fit, category fit, scene credibility, and risks.
+- **音色/声线拆解**: analyze timbre, speed, breath, pause, fatigue, urgency, nasal tone, crying edge, excitement, calm authority, dialect, and ad-resistance effects.
+- **证明链诊断**: inspect whether the clip builds `hook -> pain/scene -> product claim -> proof/sensory evidence -> trust cue -> search/conversion cue`.
+- **量爆/质爆/加热判断**: separate creative potential from measured platform performance. Use labels such as `量爆信号`, `质爆潜力`, `小预算试热`, and `待核验` when data is incomplete.
+- **搜索承接**: extract brand words, product words, function words, scene words, comparison words, and 小蓝词/comment-pin opportunities.
+- **转化承接**: decide whether the next step should be product page, live room, brand search/brand zone, local store, form/private message, or follow-up content.
+- **可复用brief**: end with the next creator type, voice requirement, opening formula, must-shoot frames, proof points, search words, CTA, monitoring metrics, and heat strategy.
+- **干净版表格视觉**: white plus 8% gray alternating rows, low-saturation Mac-like tech styling, and sparse bold/color emphasis for key words in dense tables.
+- **长画布PDF交付**: default to a single-page long-canvas PDF. HTML is only an internal render source by default. PNG is optional only when image delivery or preview is requested.
+- **保留文本层压缩**: compress embedded screenshots before PDF rendering, not the whole PDF page, so report text remains sharp and copyable.
 
-> Do not rely on frames alone. Read the video as picture + speech + subtitles + timing + BGM rhythm + deliverable layout.
+## Evidence Rules
 
-## Default Deliverable
+Both versions are evidence-first:
 
-The default output is not a free-form web page. It is:
+- Do not invent video details, GMV, A3, search lift, spend, creator performance, conversion, or inaccessible-video observations.
+- Separate `视频已验证`, `表格/平台信号`, and `待核验`.
+- Do not call a video `质爆`, `量爆`, or `高转化` as fact without matching platform data.
+- Do not force a fixed six-part timeline. Segment real content beats by function changes.
+- Treat transcript, OCR, and platform tables as evidence sources with different confidence levels.
 
-- a fixed-layout HTML report based on `assets/fixed-report-template.html`
-- a 1080px-wide PNG long image rendered from that HTML
-
-The fixed report layout includes:
-
-- large title/header area
-- subtitle, meta tags, and core judgment paragraph
-- three right-side metric cards
-- `前三秒钩子诊断`
-- `字幕、音频与画面校准`
-- `高光截图`
-- `时间轴拆解`
-
-Only change the layout when the user explicitly asks for a different format.
-
-## Typical Outputs
-
-- `<slug>_video_analysis_report_fixed.html`
-- `YYYYMMDD-<strongest-hook>-视频拆解.png`
-- optional PDF-ready report
-- high-light screenshots under `highlights/`
-- action frames under `action_frames/` or `action_highlights/` when action impact matters
-- `transcript.md`
-- `transcript_segments.json`
-- `ocr_*.json`
-- `frame_plan.json`
-- `frame_plan_seconds.txt`
-- `audio.m4a` or equivalent extracted audio
-- `audio.wav` when used for beat analysis
-- `audio_beat_candidates.json`
-
-## Skill Contents
+## Repository Layout
 
 ```text
 short-video-breakdown-report/
-├── SKILL.md
+├── SKILL.md                         # 1.0 skill entrypoint
+├── README.md
 ├── agents/
-│   └── openai.yaml
 ├── assets/
-│   └── fixed-report-template.html
+├── docs/
+│   └── 卖点黄金公式_20260707-20260713_食品饮料_梳理.md
 ├── references/
-│   └── report-structure.md
-└── scripts/
-    ├── analyze_audio_beats.py
-    ├── extract_frames.swift
-    ├── ocr_subtitles.swift
-    ├── plan_frame_times.py
-    ├── render_html_to_png.mjs
-    ├── setup_faster_whisper.sh
-    └── transcribe_faster_whisper.py
+├── scripts/
+└── short-video-breakdown-report-2-0/
+    ├── SKILL.md                     # 2.0 skill entrypoint
+    ├── agents/
+    ├── assets/
+    ├── references/
+    │   ├── report-structure-1-0.md
+    │   └── yuntu-single-video-framework.md
+    └── scripts/
+        ├── optimize_report_images.py
+        ├── render_html_to_pdf.mjs
+        └── ...
 ```
 
 ## Installation
 
-Clone or copy this folder into your Codex skills directory:
+Install 1.0:
 
 ```bash
 mkdir -p ~/.codex/skills
@@ -84,34 +71,55 @@ git clone https://github.com/tmzbb7tjyb-sys/short-video-breakdown-report.git \
   ~/.codex/skills/short-video-breakdown-report
 ```
 
-Then invoke it in Codex with:
-
-```text
-Use $short-video-breakdown-report to analyze this video and export the fixed-layout PNG report.
-```
-
-## Dependencies
-
-The core workflow is optimized for macOS:
-
-- Swift / AVFoundation for frame extraction
-- Vision framework for OCR
-- `avconvert` / `afconvert` for audio extraction and PCM conversion
-- Python for frame planning, BGM energy accent detection, and optional transcription helpers
-- Chrome for HTML-to-PNG rendering
-- optional `ffmpeg/ffprobe` for scene-change and audio-peak frame planning
-- optional `faster-whisper` for local speech transcription
-
-Set up the local Whisper environment:
+Install 2.0 from the same repository:
 
 ```bash
-cd ~/.codex/skills/short-video-breakdown-report
-./scripts/setup_faster_whisper.sh .venv-whisper
+tmpdir="$(mktemp -d)"
+git clone https://github.com/tmzbb7tjyb-sys/short-video-breakdown-report.git "$tmpdir/short-video-breakdown-report"
+cp -R "$tmpdir/short-video-breakdown-report/short-video-breakdown-report-2-0" \
+  ~/.codex/skills/short-video-breakdown-report-2-0
 ```
+
+Then invoke 2.0 in Codex:
+
+```text
+Use $short-video-breakdown-report-2-0 to analyze this video and export a long-canvas PDF report.
+```
+
+## 1.0 Typical Workflow
+
+1. Create a dedicated asset folder for the task.
+2. Inspect video duration, resolution, codec, and file size.
+3. Extract audio before final screenshot selection whenever possible.
+4. Build an evidence-first frame plan from scene cuts, speech segment boundaries, keywords, BGM accents, action peaks, product reveals, reactions, subtitle changes, and CTA endings.
+5. Extract planned frames and run OCR to correct subtitle/product-name transcription errors.
+6. Run BGM/cut-point analysis.
+7. Segment the video into real functional stages.
+8. Select highlight screenshots by content function.
+9. Generate fixed-layout HTML from `assets/fixed-report-template.html`.
+10. Export the PNG long image and verify dimensions, image references, clipping, whitespace, and layout consistency.
+
+## 2.0 Typical Workflow
+
+1. Create a dedicated asset folder for the task.
+2. Run the 1.0 evidence pass: video facts, transcript, OCR, frames, audio rhythm, screenshots, and real beat segmentation.
+3. Add the 2.0 marketing layer:
+   - content asset role
+   - creator/TA fit
+   - voice/timbre emotion
+   - proof chain
+   - viral and heat potential
+   - search handoff
+   - conversion handoff
+   - reusable brief
+4. Generate an internal HTML render source from `short-video-breakdown-report-2-0/assets/fixed-report-template.html`.
+5. Export a single-page long-canvas PDF with `render_html_to_pdf.mjs`.
+6. If size needs reduction, optimize embedded screenshots first and re-render PDF.
+7. Verify page count, dimensions, image references, layout, file size, and text copyability.
 
 ## Script Usage
 
-Plan frame timestamps from baseline coverage plus scene cuts, speech turns, keywords, action peaks, and audio peaks:
+Plan frame timestamps:
 
 ```bash
 scripts/plan_frame_times.py input.mp4 output/frame_plan.json \
@@ -122,17 +130,6 @@ Extract frames:
 
 ```bash
 swift scripts/extract_frames.swift input.mp4 output/frames "$(cat output/frame_plan_seconds.txt)"
-```
-
-Extract audio and run lightweight BGM accent detection:
-
-```bash
-avconvert --source input.mp4 --preset PresetAppleM4A \
-  --output output/audio.m4a --replace --disableMetadataFilter
-
-afconvert -f WAVE -d LEI16 output/audio.m4a output/audio.wav
-
-scripts/analyze_audio_beats.py output/audio.wav output/audio_beat_candidates.json
 ```
 
 OCR subtitles and product text:
@@ -148,7 +145,7 @@ Transcribe audio:
   --prompt "This is a Chinese short video with spoken copy, subtitles, products, and lifestyle content."
 ```
 
-Render the fixed-layout HTML report to a 1080px-wide PNG:
+Render a 1.0 PNG:
 
 ```bash
 node scripts/render_html_to_png.mjs \
@@ -157,43 +154,49 @@ node scripts/render_html_to_png.mjs \
   --width 1080
 ```
 
-## Recommended Workflow
+Render a 2.0 long-canvas PDF:
 
-1. Create a dedicated asset folder for the task.
-2. Inspect video duration, resolution, codec, and file size.
-3. Extract audio before final screenshot selection whenever possible.
-4. Build an evidence-first frame plan; use even coverage only as the safety net.
-5. Add high-signal candidates from scene cuts, speech segment boundaries, keyword moments, BGM accents, action peaks, product reveals, reactions, subtitle changes, and CTA endings.
-6. Extract planned frames and run OCR to correct subtitle/product-name transcription errors.
-7. Run BGM/cut-point analysis and compare beat candidates with visual cuts, object swaps, gestures, reveals, and subtitle pops.
-8. Add targeted second-pass frames when OCR/transcript/rhythm review exposes a missed high-light.
-9. Identify the actual content hook, including language, action, role/voice, and BGM rhythm mechanisms.
-10. Segment the video into functional stages.
-11. Select high-light screenshots by content function, not only by aesthetics.
-12. Generate fixed-layout HTML using `assets/fixed-report-template.html`.
-13. Export the PNG long image and verify dimensions, image references, clipping, whitespace, and layout consistency.
+```bash
+node short-video-breakdown-report-2-0/scripts/render_html_to_pdf.mjs \
+  output/<slug>-视频框架拆解2.0.html \
+  output/YYYYMMDD-<strongest-hook>-视频框架拆解2.0.pdf \
+  --width 1080
+```
 
-## Analysis Principles
+Compress a 2.0 PDF while preserving copyable text:
 
-- Use the strongest content hook as the title.
-- Explain the hook mechanism, not just the hook text.
-- If the video is visibly cut to music, call out `BGM卡点`, `重拍切换`, or `节拍推进`; do not flatten it to "fast pacing".
-- Mine action hooks as carefully as language hooks.
-- Do not present evenly spaced screenshots as high-lights unless they survive functional selection.
-- Every high-light screenshot should prove a specific content function.
-- Calibrate scores against execution gaps such as weak proof chain, unclear price/CTA, subjective-only claims, late evidence, or action distracting from the promise.
-- Keep transcript/OCR outputs as evidence, not unquestioned truth.
-- Correct obvious dialect, subtitle, product-name, and brand-name misreads.
+```bash
+python3 short-video-breakdown-report-2-0/scripts/optimize_report_images.py \
+  output/<slug>-视频框架拆解2.0.html \
+  output/<slug>-视频框架拆解2.0-optimized-source.html
 
-## Layout Rules
+node short-video-breakdown-report-2-0/scripts/render_html_to_pdf.mjs \
+  output/<slug>-视频框架拆解2.0-optimized-source.html \
+  output/YYYYMMDD-<strongest-hook>-视频框架拆解2.0-compressed.pdf \
+  --width 1080
+```
 
-- Use `assets/fixed-report-template.html` by default.
-- Keep the fixed section order.
-- Keep the dense newspaper-style table layout for PNG export.
-- Vary the number of calibration cards, highlight figures, and timeline columns only when the video content requires it.
-- Do not add horizontal-scroll containers.
-- Do not invent a new report style unless the user explicitly asks.
+Do not compress by converting the whole PDF page into one JPEG/PNG and wrapping it back into PDF. That removes selectable text and makes zoomed text blurry.
+
+## Dependencies
+
+The workflow is optimized for macOS:
+
+- Swift / AVFoundation for frame extraction
+- Vision framework for OCR
+- `avconvert` / `afconvert` for audio extraction and PCM conversion
+- Python for frame planning, BGM energy accent detection, image optimization, and optional transcription helpers
+- Chrome for HTML-to-PNG and HTML-to-PDF rendering
+- optional `ffmpeg/ffprobe` for scene-change and audio-peak frame planning
+- optional `faster-whisper` for local speech transcription
+
+Set up the local Whisper environment:
+
+```bash
+cd ~/.codex/skills/short-video-breakdown-report
+./scripts/setup_faster_whisper.sh .venv-whisper
+```
 
 ## Notes
 
-This repository contains the reusable skill, fixed report template, and helper scripts only. It does not include analyzed videos, transcripts, screenshots, or generated reports from private projects.
+This repository contains reusable skills, report templates, references, and helper scripts only. It does not include analyzed videos, transcripts, screenshots, generated reports, or private project assets.

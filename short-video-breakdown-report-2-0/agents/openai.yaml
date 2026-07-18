@@ -1,0 +1,4 @@
+interface:
+  display_name: "视频框架拆解2.0"
+  short_description: "单条短视频内容资产价值诊断框架"
+  default_prompt: "Use $short-video-breakdown-report-2-0 to analyze a short video as a content asset across hook, creator fit, selling points, search, conversion, and reuse."
