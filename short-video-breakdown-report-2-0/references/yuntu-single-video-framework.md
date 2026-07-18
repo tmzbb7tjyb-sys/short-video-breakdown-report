@@ -2,6 +2,27 @@
 
 Use this reference when a 2.0 report needs detailed marketing diagnosis, tables, or a next-round content brief.
 
+## 0. 1.0 Evidence Layer Must Stay Intact
+
+Before writing any 2.0 marketing diagnosis, preserve the full 1.0 video breakdown. 2.0 is an additive layer, not a compressed version.
+
+Required 1.0 evidence layer:
+
+- exact 3-second hook wording, image/action hook, rhythm hook, and proof gap
+- transcript/OCR calibration cards for every distinct content function, not a fixed small number
+- voice/timbre analysis tied to emotion, trust, TA filtering, and ad resistance
+- high-signal screenshots for each important function: hook, product reveal, action/fluid/gesture peak, taste/texture proof, package/specification proof, trust proof, price/value cue, CTA
+- timeline beats derived from actual content-function changes
+- strengths, risks, and optimization suggestions grounded in video evidence
+
+What must not happen:
+
+- Do not shorten the 1.0 layer to make room for `星推搜直`.
+- Do not reduce a 9-12 screenshot evidence set to 6 screenshots only because the template has a compact grid.
+- Do not merge real beats such as `hook -> product/category ->口味 ->规格 ->真料 ->冲泡 ->口感 ->二创 ->CTA` into fewer generic stages.
+- Do not turn concrete evidence like "green tea liquid pour", "tea bag into bottle", "ingredient close-up", or "milk turns it into matcha latte" into vague labels like "proof chain complete".
+- If a report becomes long, increase the long-canvas height and keep text selectable; do not rasterize the whole page.
+
 ## 1. One-Line Judgment
 
 Write one sentence that answers:
@@ -136,6 +157,9 @@ For each real beat, include only rows that matter:
 | 搜索词/承接 | likely search or next step |
 | 强点 | what works |
 | 风险 | missing proof, unclear TA, weak CTA, compliance risk |
+| 优化建议 | concrete remake or handoff fixes when the evidence shows a gap |
+
+The timeline's beat count follows the video's actual content functions. For example, a dense beverage video may need separate beats for `结果钩子`, `品牌品类`, `口味展示`, `规格便携`, `真料证明`, `低门槛冲泡`, `感官口感`, `二创喝法`, and `人群CTA`. Keep those separate when they carry different marketing or creative jobs.
 
 Table emphasis rules:
 
